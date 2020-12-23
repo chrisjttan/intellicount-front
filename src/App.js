@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from 'react';
+// import Home from './pages/Home';
+// import Navvy from './components/Navvy';
+// import { BrowserRouter, Route } from 'react-router-dom';
+// import Blog from './pages/Blog';
+import Game from './components/Game';
+class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	render() {
+		return (
+			<div>
+				<Game className='d-flex'></Game>
+			</div>
+		);
+	}
 }
 
 export default App;
