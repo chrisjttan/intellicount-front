@@ -12,10 +12,12 @@ let gameOver = false;
 function collectStar(player, star) {
 	star.disableBody(true, true);
 
+	//  Add and update the score
 	score += 10;
 	scoreText.setText('Score: ' + score);
 
 	if (stars.countActive(true) === 0) {
+		//  A new batch of stars to collect
 		stars.children.iterate(function (child) {
 			child.enableBody(true, child.x, 0, true, true);
 		});
@@ -29,6 +31,7 @@ function collectStar(player, star) {
 		bomb.setBounce(1);
 		bomb.setCollideWorldBounds(true);
 		bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+		bomb.allowGravity = false;
 	}
 }
 
@@ -41,7 +44,7 @@ function hitBomb(player, bomb) {
 
 	gameOver = true;
 }
-class Scenes extends Phaser.Scene {
+class DemoScenes extends Phaser.Scene {
 	preload() {
 		this.load.image('sky', 'assets/sky.png');
 		this.load.image('ground', 'assets/platform.png');
@@ -69,11 +72,14 @@ class Scenes extends Phaser.Scene {
 		platforms.create(50, 250, 'ground');
 		platforms.create(750, 220, 'ground');
 
+		// The player and its settings
 		player = this.physics.add.sprite(100, 450, 'dude');
 
+		//  Player physics properties. Give the little guy a slight bounce.
 		player.setBounce(0.2);
 		player.setCollideWorldBounds(true);
 
+		//  Our player animations, turning, walking left and walking right.
 		this.anims.create({
 			key: 'left',
 			frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -94,10 +100,10 @@ class Scenes extends Phaser.Scene {
 			repeat: -1,
 		});
 
-		this.physics.add.collider(player, platforms);
-
+		//  Input Events
 		cursors = this.input.keyboard.createCursorKeys();
 
+		//  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
 		stars = this.physics.add.group({
 			key: 'star',
 			repeat: 11,
@@ -105,20 +111,25 @@ class Scenes extends Phaser.Scene {
 		});
 
 		stars.children.iterate(function (child) {
+			//  Give each star a slightly different bounce
 			child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
 		});
 
-		this.physics.add.collider(stars, platforms);
-		this.physics.add.overlap(player, stars, collectStar, null, this);
+		bombs = this.physics.add.group();
 
+		//  The score
 		scoreText = this.add.text(16, 16, 'score: 0', {
 			fontSize: '32px',
 			fill: '#000',
 		});
 
-		bombs = this.physics.add.group();
-
+		//  Collide the player and the stars with the platforms
+		this.physics.add.collider(player, platforms);
+		this.physics.add.collider(stars, platforms);
 		this.physics.add.collider(bombs, platforms);
+
+		//  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+		this.physics.add.overlap(player, stars, collectStar, null, this);
 
 		this.physics.add.collider(player, bombs, hitBomb, null, this);
 	}
@@ -143,7 +154,7 @@ class Scenes extends Phaser.Scene {
 	}
 }
 
-const gameConfig = {
+const demoGameConfig = {
 	game: {
 		width: 800,
 		height: 600,
@@ -155,8 +166,8 @@ const gameConfig = {
 				debug: false,
 			},
 		},
-		scene: Scenes,
+		scene: DemoScenes,
 	},
 };
 
-export default gameConfig;
+export default demoGameConfig;

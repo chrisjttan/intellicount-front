@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { IonPhaser } from '@ion-phaser/react';
-import demoGameConfig from './DemoGameConfig/DemoMainCfg';
+import gameConfig from './DemoGameConfig/MainCfg';
+import { Container } from 'reactstrap';
 
 class DemoGame extends Component {
 	constructor(props) {
@@ -17,14 +18,18 @@ class DemoGame extends Component {
 	componentDidMount() {
 		// main phaser game setup
 		this.setState({
-			game: demoGameConfig.game,
+			game: gameConfig.game,
 			initialize: true,
 		});
 	}
 
 	render() {
 		const { initialize, game } = this.state;
-		return <IonPhaser game={game} initialize={initialize} />;
+		return (
+			<Container fluid className='d-inline'>
+				<IonPhaser game={game} initialize={initialize} />
+			</Container>
+		);
 	}
 }
 

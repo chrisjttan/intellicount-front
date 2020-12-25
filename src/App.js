@@ -1,5 +1,8 @@
 import { Component } from 'react';
 import DemoGame from './components/DemoGame';
+import { Container } from 'reactstrap';
+import Navbar from './components/Navbar';
+import Game from './components/Game';
 
 class App extends Component {
 	constructor(props) {
@@ -8,7 +11,12 @@ class App extends Component {
 	}
 
 	render() {
-		return <DemoGame></DemoGame>;
+		return (
+			<Container>
+				<Game />
+				<Navbar />
+			</Container>
+		);
 	}
 }
 
