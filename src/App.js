@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Game from './components/Game';
+import DemoGame from './components/DemoGame';
 
 class App extends Component {
 	constructor(props) {
@@ -8,7 +8,7 @@ class App extends Component {
 	}
 
 	render() {
-		return <Game></Game>;
+		return <DemoGame></DemoGame>;
 	}
 }
 
