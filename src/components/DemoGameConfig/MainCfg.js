@@ -1,7 +1,5 @@
 import Phaser from 'phaser';
 
-let layer;
-let rt;
 class Scenes extends Phaser.Scene {
 	preload() {
 		this.load.image('base', 'assets/floorPartBig.png');
@@ -23,13 +21,11 @@ class Scenes extends Phaser.Scene {
 		];
 
 		//  When loading from an array, make sure to specify the tileWidth and tileHeight
-		var map = this.make.tilemap({ data: level, tileWidth: 16, tileHeight: 16 });
+		this.map = this.add.tilemap();
 
-		var tiles = map.addTilesetImage('base');
+		var tiles = this.map.addTilesetImage('base');
 
-		layer = map.createLayer(0, tiles, 0, 0).setVisible(false);
-
-		rt = this.add.renderTexture(0, 0, 800, 600);
+		this.backgroundLayer = this.map.createStaticLayer('backgroundLayer', tiles);
 	}
 	update() {}
 }

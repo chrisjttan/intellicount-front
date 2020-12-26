@@ -4,7 +4,7 @@ export default function Navbar() {
 	return (
 		<div>
 			<Nav vertical className='d-inline'>
-				<NavItem>poggers</NavItem>
+				<NavItem>test</NavItem>
 			</Nav>
 		</div>
 	);
